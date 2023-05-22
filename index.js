@@ -8,6 +8,10 @@ const app = express()
 app.use(cors())
 const port = 3001
 
+
+app.get('/',(req,res)=>{
+  res.send({title:'book'});
+});
 app.use('/api/Students', require("./routes/Students"));
 app.use('/api/Studentpayment', require("./routes/Studentpaymentroute"));
 app.use('/api/Admin',require("./routes/Signup"));
