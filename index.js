@@ -1,12 +1,16 @@
 require('dotenv').config()
-const connectToMongo = require("./db");
 const express = require('express');
 var cors = require('cors');
-connectToMongo();
+
+const { MongoClient } = require('mongodb');
+const app = express();
+const PORT = process.env.PORT || 3000
+
+const uri = process.env.MONGO_CONNECTION_STRING;
+const client = new MongoClient(uri);
 
 const app = express()
 app.use(cors())
-const port = process.env.PORT || 3001
 
 
 app.get('/',(req,res)=>{
@@ -19,7 +23,11 @@ app.use('/api/examp',require('./routes/Example'));
 app.use('/api/result',require('./routes/Results'));
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+client.connect(err => {
+    if(err){ console.error(err); return false;}
+    // connection to mongo is successful, listen for requests
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+});
 
