@@ -7,6 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 3000
 
 const uri = process.env.MONGO_CONNECTION_STRING;
+if (uri.startsWith("mongodb://")) {
+  uri = connectionString.slice("mongodb://".length);
+  
+}
 const client = new MongoClient(uri);
 app.use(cors());
 app.get('/',(req,res)=>{
