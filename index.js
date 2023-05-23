@@ -8,10 +8,7 @@ const PORT = process.env.PORT || 3000
 
 const uri = process.env.MONGO_CONNECTION_STRING;
 const client = new MongoClient(uri);
-
-app.use(cors())
-
-
+app.use(cors());
 app.get('/',(req,res)=>{
   res.send({title:'book'});
 });
